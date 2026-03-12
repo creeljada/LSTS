@@ -49,14 +49,24 @@
         <div class="header">Lamoille Summit Trail System</div>
         <div class="container">
             <div class="sidebar">
-                <h2>Trail System Info</h2>
-                <p>Explore the Lamoille Summit Trail System map. Use the controls to view different basemaps and trail layers.</p>
-                <ul>
-                    <li>USGS Topo and OpenTopoMap basemaps</li>
-                    <li>Interactive trail layers</li>
-                    <li>Popups with details</li>
-                </ul>
-                <p style="font-size:0.9em;color:#888;">Powered by Leaflet & QGIS2Web</p>
+                                <h2>Trail System Info</h2>
+                                <p>Explore the Lamoille Summit Trail System map. Use the controls to view different basemaps and trail layers.</p>
+                                <ul>
+                                        <li>USGS Topo and OpenTopoMap basemaps</li>
+                                        <li>Interactive trail layers</li>
+                                        <li>Popups with details</li>
+                                </ul>
+                                <div style="margin: 24px 0;">
+                                    <h3>Trail Layer Visibility</h3>
+                                    <form id="layer-toggles">
+                                        <label><input type="checkbox" id="toggle-ape" checked> APE Area</label><br>
+                                        <label><input type="checkbox" id="toggle-staging" checked> Staging Areas</label><br>
+                                        <label><input type="checkbox" id="toggle-existing" checked> Existing Trails</label><br>
+                                        <label><input type="checkbox" id="toggle-footprint" checked> Project Footprint</label><br>
+                                        <label><input type="checkbox" id="toggle-sierra" checked> Sierra Trailworks</label>
+                                    </form>
+                                </div>
+                                <p style="font-size:0.9em;color:#888;">Powered by Leaflet & QGIS2Web</p>
             </div>
             <div id="map"></div>
         </div>
@@ -78,6 +88,27 @@
         <script src="assets/data/ExistingTrails_NAD83_2.js"></script>
         <script src="assets/data/ProjectFootprint_NAD83_3.js"></script>
         <script src="assets/data/SierraTrailworks_NAD83_4.js"></script>
-        <script src="exports/qgis2web_2026_02_26-21_29_13_292175/script.js"></script>
+                <script src="exports/qgis2web_2026_02_26-21_29_13_292175/script.js"></script>
+                <script>
+                // Sidebar layer toggles logic
+                window.addEventListener('DOMContentLoaded', function() {
+                    function toggleLayer(checkboxId, layerVar) {
+                        var cb = document.getElementById(checkboxId);
+                        if (!cb) return;
+                        cb.addEventListener('change', function() {
+                            if (cb.checked) {
+                                window[layerVar] && map.addLayer(window[layerVar]);
+                            } else {
+                                window[layerVar] && map.removeLayer(window[layerVar]);
+                            }
+                        });
+                    }
+                    toggleLayer('toggle-ape', 'layer_APE_NAD83_0');
+                    toggleLayer('toggle-staging', 'layer_StagingArea_NAD83_1');
+                    toggleLayer('toggle-existing', 'layer_ExistingTrails_NAD83_2');
+                    toggleLayer('toggle-footprint', 'layer_ProjectFootprint_NAD83_3');
+                    toggleLayer('toggle-sierra', 'layer_SierraTrailworks_NAD83_4');
+                });
+                </script>
     </body>
 </html>

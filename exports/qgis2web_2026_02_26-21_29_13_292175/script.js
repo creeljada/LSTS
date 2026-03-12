@@ -23,7 +23,16 @@ var baseMaps = {
     "USGS Topo": usgsTopo,
     "OpenTopoMap": openTopo
 };
-L.control.layers(baseMaps, null, {collapsed: false, position: 'topright'}).addTo(map);
+
+var overlays = {
+    "APE Area": layer_APE_NAD83_0,
+    "Staging Areas": layer_StagingArea_NAD83_1,
+    "Existing Trails": layer_ExistingTrails_NAD83_2,
+    "Project Footprint": layer_ProjectFootprint_NAD83_3,
+    "Sierra Trailworks": layer_SierraTrailworks_NAD83_4
+};
+
+// Removed Leaflet layer control; toggles are now in sidebar
 var hash = new L.Hash(map);
 map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
 var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
